@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcrypt-ts": "^6.0.0",
+    "firebase": "^11.4.0",
     "next": "15.2.1",
     "next-auth": "^5.0.0-beta.25",
     "react": "^19.0.0",
