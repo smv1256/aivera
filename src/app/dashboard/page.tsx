@@ -1,4 +1,9 @@
-export default function Dashboard () {
+import { auth } from "./../../../auth";
+
+export default async function Dashboard () {  
+    const session = await auth()
+    if (!session) return <div>Not authenticated</div>
+
     return (
       <div className="flex flex-col min-h-screen">
         <main className="flex-1 flex flex-col items-center justify-center">
