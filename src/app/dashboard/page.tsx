@@ -1,7 +1,10 @@
-import { auth } from "./../../../auth";
+import getServerSession from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Dashboard () {  
-    const session = await auth()
+    const session = getServerSession(authOptions);
+    console.log(session);
+
     if (!session) return <div>Not authenticated</div>
 
     return (
