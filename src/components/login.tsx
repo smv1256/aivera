@@ -37,16 +37,22 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
+  console.log("rendered");
+
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // alert(1)
+    e.preventDefault();
+    // console.log("form submitted");
+
+    const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    console.log(email, password);
 
     const result = await signIn("credentials", {
       redirect: false,
@@ -54,19 +60,29 @@ export default function LoginPage() {
       password,
     });
 
+    // console.log(result);
+    // alert(result);
+
     if (result?.error) {
-      setError("Invalid email or password");
+      console.log(result.error);
+      setError(result.error);
+      // setError("Invalid email or password");
+      // alert(result.error);
     } else {
       router.push(callbackUrl);
+      // router.push("/dashboard");
     }
-  };
+  }; 
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="">Login</h1>
-      {error && <p className="">{error}</p>}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <input type="email" name="email" placeholder="Email" required className="border p-2" />
+      {/* <form onSubmit={() => alert(1)}>
+        <button type="submit">Submit</button>
+      </form> */}
+      {error && <p className="">{error}</p>} 
+      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-4">
+        <input type="email" name="email" placeholder="Email" required className="border p-2" />
         <input type="password" name="password" placeholder="Password" required className="border p-2" />
         <button type="submit" className="">Login</button>
       </form>
