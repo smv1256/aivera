@@ -60,7 +60,7 @@ export default function LoginPage() {
       password,
     });
 
-    // console.log(result);
+    console.log(result);
     // alert(result);
 
     if (result?.error) {

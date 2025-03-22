@@ -1,14 +1,14 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { FirestoreAdapter } from "@auth/firebase-adapter";
-import { type NextAuthOptions } from "next-auth";
+// import { type NextAuthOptions } from "next-auth";
 // import { getFirestore } from "firebase-admin/firestore";
 import { adminDB } from "../../../../backend/lib/firestoreAdmin";
 import { compare } from "bcrypt-ts";
 import type { JWT } from "next-auth/jwt";
 import type { Session } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions /*: NextAuthOptions*/ = {
   adapter: FirestoreAdapter(adminDB), 
   providers: [
     CredentialsProvider({
@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email", required: true },
         password: { label: "Password", type: "password", required: true },
       },
-      async authorize(credentials)/*: Promise<{ id: string; name: string; email: string } | null>*/ {
+      async authorize(credentials): Promise<{ id: string; name: string; email: string } | null> {
         console.log("Authorize", credentials);
 
         if (!credentials?.email || !credentials?.password) {
